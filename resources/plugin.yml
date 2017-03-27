@@ -1,0 +1,13 @@
+name: InventoryGames
+main: net.richardsprojects.plugins.inventorygames.InventoryGames
+version: 1.0.8
+description: Play the popular 2048 game inside of Minecraft and eventually other puzzle games all within the inventory screen with this premium plugin!
+author: Dev_Richard
+website: http://www.richardsprojects.net/
+softdepend: [TitleAPI, BountifulAPI]
+prefix: InventoryGames
+
+commands:
+   example:
+      description: Shows the leaderboard
+      usage: /<command>

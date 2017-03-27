@@ -1,0 +1,14 @@
+# ------------------
+# Sample Config file
+# ------------------
+
+# data storage type - can be yml or mysql
+dbType: yml
+
+# MySQL database settings - don't need to fill out if using YML
+tablePrefix: IG_
+MySQL_Host: ''
+MySQL_DatabaseName: ''
+MySQL_Port: 3306
+MySQL_Username: ''
+MySQL_Password: ''

@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AbstractStorageTest:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AbstractStorageTest_jar</output-path>
+    <root id="archive" name="InventoryGames.jar">
+      <element id="module-output" name="InventoryGames" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/zaxxer/HikariCP/2.4.1/HikariCP-2.4.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/slf4j/slf4j-simple/1.6.4/slf4j-simple-1.6.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.12/slf4j-api-1.7.12.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
