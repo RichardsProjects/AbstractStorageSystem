@@ -6,7 +6,7 @@
 dbType: yml
 
 # MySQL database settings - don't need to fill out if using YML
-tablePrefix: IG_
+tablePrefix: ig_
 MySQL_Host: ''
 MySQL_DatabaseName: ''
 MySQL_Port: 3306

@@ -6,6 +6,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.Collections;
@@ -17,14 +18,15 @@ import java.util.ArrayList;
  * YML.
  *
  * @author RichardB122
- * @version 3/24/17
+ * @version 3/29/17
  */
 public class YmlDatastore extends Datastore {
 
-	private HashMap<UUID, String> names = new HashMap<UUID, String>();
-	private HashMap<UUID, Integer> losses = new HashMap<UUID, Integer>();
-	private HashMap<UUID, Integer> wins = new HashMap<UUID, Integer>();
-	private HashMap<UUID, Integer> highscores = new HashMap<UUID, Integer>();
+	private HashMap<UUID, String> names = new HashMap<>();
+	private HashMap<UUID, Integer> losses = new HashMap<>();
+	private HashMap<UUID, Integer> wins = new HashMap<>();
+	private HashMap<UUID, Integer> ties = new HashMap<>();
+	private HashMap<UUID, Integer> highscores = new HashMap<>();
 
 	private File highscoresFile;
 	private File ticTacToeFile;
@@ -126,11 +128,13 @@ public class YmlDatastore extends Datastore {
 					String[] split = data.split("-");
 					int losses = 0;
 					int wins = 0;
-					if (split.length == 2) {
+					int ties = 0;
+					if (split.length == 3) {
 						try {
 							wins = Integer.parseInt(split[0]);
 							losses = Integer.parseInt(split[1]);
-						} catch (Exception e) {
+							ties = Integer.parseInt(split[2]);
+						} catch (NumberFormatException e) {
 							sucessfullyParsed = false;
 						}
 					} else {
@@ -140,6 +144,7 @@ public class YmlDatastore extends Datastore {
 					if (sucessfullyParsed) {
 						this.losses.put(uuid, losses);
 						this.wins.put(uuid, wins);
+						this.ties.put(uuid, ties);
 					} else {
 						String msg = "[InventoryGames] There was an error reading ";
 						msg = msg + key + " from tictactoe.yml.";
@@ -403,6 +408,24 @@ public class YmlDatastore extends Datastore {
 		return true;
 	}
 
+	@Override
+	public boolean updateTicTacToeTies(UUID player, String name, int value) {
+		if (ties.containsKey(player)) {
+			ties.remove(player);
+		}
+		ties.put(player, value);
+
+		if (names.containsKey(player)) {
+			names.remove(player);
+		}
+		names.put(player, name);
+
+		ticTacToeNeedsUpdate = true;
+		uuidsNeedsUpdate = true;
+
+		return true;
+	}
+
 	/**
 	 * @see Datastore#getTicTacToeLosses(UUID)
 	 */
@@ -424,6 +447,32 @@ public class YmlDatastore extends Datastore {
 
 		if (uuid != null) {
 			return getTicTacToeLosses(uuid);
+		} else {
+			return 0;
+		}
+	}
+
+	/**
+	 * @see Datastore#getTicTacToeTies(UUID)
+	 */
+	@Override
+	public int getTicTacToeTies(UUID player) {
+		if (ties.containsKey(player)) {
+			return ties.get(player);
+		} else {
+			return 0;
+		}
+	}
+
+	/**
+	 * @see Datastore#getTicTacToeTies(String)
+	 */
+	@Override
+	public int getTicTacToeTies(String player) {
+		UUID uuid = getUUID(player);
+
+		if (uuid != null) {
+			return getTicTacToeTies(uuid);
 		} else {
 			return 0;
 		}
@@ -540,8 +589,9 @@ public class YmlDatastore extends Datastore {
 			for (UUID uuid : wins.keySet()) {
 				int wins = this.wins.get(uuid);
 				int losses = this.losses.get(uuid);
+				int ties = this.ties.get(uuid);
 
-				String str = wins + "-" + losses;
+				String str = wins + "-" + losses + "-" + ties;
 				ticTacToeYML.set(uuid.toString(), str);
 			}
 

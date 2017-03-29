@@ -74,6 +74,7 @@ public class MySQLDatastore extends Datastore {
 	 * @param ties new tie count
 	 * @return whether it succeeded or failed
 	 */
+	@Override
 	public boolean updateTicTacToeTies(UUID player, String name, int ties) {
 		boolean recordExists = false;
 		boolean success = true;
@@ -82,7 +83,7 @@ public class MySQLDatastore extends Datastore {
 		ResultSet set = null;
 
 		String sql = "INSERT INTO " + PREFIX + "tictactoe VALUES (?, ?, 0, 0, ?) ON DUPLICATE KEY" +
-				" UPDATE games_tied = ? AND player = ?";
+				" UPDATE games_tied = ?, player = ?";
 		try {
 			conn = pool.getConnection();
 			ps = conn.prepareStatement(sql);
@@ -223,6 +224,7 @@ public class MySQLDatastore extends Datastore {
 	 * @param player player's UUID
 	 * @return player's ties or 0 if no record was found.
 	 */
+	@Override
 	public int getTicTacToeTies(UUID player) {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -255,6 +257,7 @@ public class MySQLDatastore extends Datastore {
 	 * @param player player's name
 	 * @return player's ties or 0 if no record was found.
 	 */
+	@Override
 	public int getTicTacToeTies(String player) {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -322,14 +325,13 @@ public class MySQLDatastore extends Datastore {
 	 * @return whether the operation succeeded or failed
 	 */
 	public boolean updateHighscore(UUID player, String name, int score) {
-		boolean recordExists = false;
 		boolean success = true;
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet set = null;
 
 		String sql = "INSERT INTO " + PREFIX + "highscores VALUES (?, ?, ?) ON DUPLICATE KEY" +
-				" UPDATE highscore = ? AND player = ?";
+				" UPDATE highscore = ?, player = ?";
 
 		try {
 			conn = pool.getConnection();
@@ -399,7 +401,7 @@ public class MySQLDatastore extends Datastore {
 		ResultSet set = null;
 
 		String sql = "INSERT INTO " + PREFIX + "tictactoe VALUES (?, ?, ?, 0, 0) ON DUPLICATE KEY" +
-				" UPDATE games_won = ? AND player = ?";
+				" UPDATE games_won = ?, player = ?";
 
 		try {
 			conn = pool.getConnection();
@@ -469,7 +471,7 @@ public class MySQLDatastore extends Datastore {
 		ResultSet set = null;
 
 		String sql = "INSERT INTO " + PREFIX + "tictactoe VALUES (?, ?, 0, ?, 0) ON" +
-				" DUPLICATE KEY UPDATE games_lost = ? AND name = ?";
+				" DUPLICATE KEY UPDATE games_lost = ?, name = ?";
 		try {
 			conn = pool.getConnection();
 			ps = conn.prepareStatement(sql);

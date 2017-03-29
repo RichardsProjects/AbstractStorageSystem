@@ -7,7 +7,7 @@ import java.util.UUID;
  * plugin datastore needs to contain.
  *
  * @author RichardB122
- * @version 3/23/16
+ * @version 3/28/16
  */
 public abstract class Datastore {
 
@@ -102,6 +102,17 @@ public abstract class Datastore {
 	public abstract boolean updateTicTacToeLosses(UUID player, String name, int value);
 
 	/**
+	 * Update's the player's tie count and username based on the provided
+	 * UUID. Returns whether the operation was successful or not.
+	 *
+	 * @param player player's UUID
+	 * @param name player's name
+	 * @param value new tie count
+	 * @return whether the operation was successful or not
+	 */
+	public abstract boolean updateTicTacToeTies(UUID player, String name, int value);
+
+	/**
 	 * Gets the number of losses the player has by the specified UUID. Returns
 	 * 0 if there are no records attached to that player UUID.
 	 *
@@ -120,6 +131,26 @@ public abstract class Datastore {
 	 * @return tic tac loss count or 0
 	 */
 	public abstract int getTicTacToeLosses(String player);
+
+	/**
+	 * Get's the tic tac ties of the player based on the provided name. First
+	 * attempts to get the UUID of the provided player name. If no UUID can be
+	 * resolved to the provided player name the method returns 0, otherwise it
+	 * returns getTicTacToeLosses(UUID).
+	 *
+	 * @param player player's name
+	 * @return tic tac tie count or 0
+	 */
+	public abstract int getTicTacToeTies(String player);
+
+	/**
+	 * Gets the number of ties the player has by the specified UUID. Returns
+	 * 0 if there are no records attached to that player UUID.
+	 *
+	 * @param player player's UUID
+	 * @return their tie count or 0
+	 */
+	public abstract int getTicTacToeTies(UUID player);
 
 	/**
 	 * Closes connections and saves all pending data. Should be run in the
