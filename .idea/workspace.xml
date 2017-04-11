@@ -6,12 +6,19 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19898717-fa45-4027-a718-19aa1084a627" name="Default" comment="* Fixed bug SQL code&#10;* Added abstract methods for tic tac ties&#10;* Implemented support for tracking tic tac toe ties to YmlDatastore">
+    <list default="true" id="19898717-fa45-4027-a718-19aa1084a627" name="Default" comment="* Fixed bug in SQL code&#10;* Fixed bug in YML implementation&#10;* Add try with resources statements&#10;* Switched to using getLogger()">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/InventoryGames.java" afterPath="$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/LobbyGames.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/Utils.java" afterPath="$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/Utils.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/commands/ExampleCommand.java" afterPath="$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/commands/ExampleCommand.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/datastore/ConnectionPoolManager.java" afterPath="$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/datastore/ConnectionPoolManager.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/datastore/Datastore.java" afterPath="$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/datastore/Datastore.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/datastore/MySQLDatastore.java" afterPath="$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/datastore/MySQLDatastore.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/datastore/YmlDatastore.java" afterPath="$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/datastore/YmlDatastore.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/config.yml" afterPath="$PROJECT_DIR$/resources/config.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/datastore/Datastore.java" afterPath="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/datastore/Datastore.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/datastore/MySQLDatastore.java" afterPath="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/datastore/MySQLDatastore.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/datastore/YmlDatastore.java" afterPath="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/datastore/YmlDatastore.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/plugin.yml" afterPath="$PROJECT_DIR$/resources/plugin.yml" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,17 +31,84 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MySQLDatastore.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/datastore/MySQLDatastore.java">
+      <file leaf-file-name="ConnectionPoolManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/datastore/ConnectionPoolManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="183">
-              <caret line="347" column="12" lean-forward="false" selection-start-line="347" selection-start-column="12" selection-end-line="347" selection-end-column="12" />
+            <state relative-caret-position="164">
+              <caret line="71" column="6" lean-forward="false" selection-start-line="71" selection-start-column="6" selection-end-line="71" selection-end-column="6" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LobbyGames.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/LobbyGames.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2">
+              <caret line="57" column="20" lean-forward="false" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MySQLDatastore.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/datastore/MySQLDatastore.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="576">
+              <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Datastore.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/datastore/Datastore.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="54">
+              <caret line="39" column="49" lean-forward="false" selection-start-line="39" selection-start-column="49" selection-end-line="39" selection-end-column="49" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExampleCommand.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/commands/ExampleCommand.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="614">
+              <caret line="47" column="32" lean-forward="false" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="32" />
+              <folding>
+                <element signature="e#1153#1154#0" expanded="true" />
+                <element signature="e#1182#1183#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="36">
+                <caret line="2" column="126" lean-forward="false" selection-start-line="2" selection-start-column="126" selection-end-line="2" selection-end-column="126" />
+                <folding />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -43,6 +117,11 @@
       <find>updateTick</find>
       <find>getTicTacToeWins</find>
       <find>getTicTacToeTies</find>
+      <find>[</find>
+      <find>get</find>
+      <find>finally</find>
+      <find>ResultSet</find>
+      <find>AND Pl</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -56,12 +135,22 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/resources/plugin.yml" />
         <option value="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/InventoryGames.java" />
         <option value="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/commands/ExampleCommand.java" />
         <option value="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/datastore/SQLManager.java" />
         <option value="$PROJECT_DIR$/resources/config.yml" />
         <option value="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/datastore/MySQLDatastore.java" />
+        <option value="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/LobbyGames.java" />
+        <option value="$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/datastore/ConnectionPoolManager.java" />
+        <option value="$PROJECT_DIR$/resources/plugin.yml" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/LobbyGames.java" />
+        <option value="$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/datastore/ConnectionPoolManager.java" />
+        <option value="$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/datastore/DatastoreException.java" />
+        <option value="$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/commands/ExampleCommand.java" />
+        <option value="$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/datastore/Datastore.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/datastore/MySQLDatastore.java" />
       </list>
     </option>
   </component>
@@ -81,7 +170,7 @@
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="InventoryGames" />
+          <option name="myItemId" value="LobbyGames" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -91,7 +180,7 @@
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="InventoryGames" />
+          <option name="myItemId" value="LobbyGames" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
@@ -105,7 +194,7 @@
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="InventoryGames" />
+          <option name="myItemId" value="LobbyGames" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
@@ -113,7 +202,7 @@
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$PluginsNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="jar" />
+          <option name="myItemId" value="assembly" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$PluginNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -249,7 +338,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="inventorygames" />
+              <option name="myItemId" value="lobbygames" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -267,7 +356,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="inventorygames" />
+              <option name="myItemId" value="lobbygames" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -291,13 +380,13 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/InventoryGames" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -566,10 +655,17 @@
       <option name="project" value="LOCAL" />
       <updated>1490760225754</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="* Fixed bug SQL code&#10;* Added abstract methods for tic tac ties&#10;* Implemented support for tracking tic tac toe ties to YmlDatastore">
+      <created>1490762613512</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1490762613512</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
-  <component name="TodoView" selected-index="4">
+  <component name="TodoView">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
     </todo-panel>
@@ -583,32 +679,32 @@
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32928178" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928178" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928178" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2529349" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2529349" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928178" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21824974" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22091782" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32928178" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -618,7 +714,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="* Merged MySQLDatastore and SQLManager&#10;* Removed null check before recordsets&#10;* Added a primary key to both tables&#10;* Made the tables use names that include the prefix&#10;* Change table and field names to lowercase&#10;* Implemented INSERT ON DUPLICATE KEY UPDATE to reduce query count&#10;* Added field to keep track of ties to tic tac toe table" />
     <MESSAGE value="* Fixed bug SQL code&#10;* Added abstract methods for tic tac ties&#10;* Implemented support for tracking tic tac toe ties to YmlDatastore" />
-    <option name="LAST_COMMIT_MESSAGE" value="* Fixed bug SQL code&#10;* Added abstract methods for tic tac ties&#10;* Implemented support for tracking tic tac toe ties to YmlDatastore" />
+    <MESSAGE value="* Fixed bug in SQL code&#10;* Fixed bug in YML implementation&#10;* Add try with resources statements&#10;* Switched to using getLogger()" />
+    <option name="LAST_COMMIT_MESSAGE" value="* Fixed bug in SQL code&#10;* Fixed bug in YML implementation&#10;* Add try with resources statements&#10;* Switched to using getLogger()" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -629,7 +726,23 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/datastore/MySQLDatastore.java">
+    <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/datastore/MySQLDatastore.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6066">
+          <caret line="347" column="12" lean-forward="false" selection-start-line="347" selection-start-column="12" selection-end-line="347" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/datastore/ConnectionPoolManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1458">
+          <caret line="92" column="12" lean-forward="false" selection-start-line="92" selection-start-column="7" selection-end-line="92" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/datastore/MySQLDatastore.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -645,54 +758,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/plugin.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="23" lean-forward="false" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/Utils.java">
+    <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/InventoryGames.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="13" column="55" lean-forward="false" selection-start-line="13" selection-start-column="55" selection-end-line="13" selection-end-column="55" />
-          <folding>
-            <element signature="e#4400#4401#0" expanded="false" />
-            <element signature="e#4429#4430#0" expanded="false" />
-            <element signature="e#4552#4553#0" expanded="false" />
-            <element signature="e#4575#4576#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/commands/ExampleCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="18" column="19" lean-forward="false" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1016#1511#0" expanded="false" />
-            <element signature="e#1510#1511#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/datastore/SQLManager.java" />
-    <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/datastore/ConnectionPoolManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/config.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
@@ -701,10 +774,84 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/inventorygames/datastore/MySQLDatastore.java">
+    <entry file="file://$PROJECT_DIR$/resources/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="347" column="12" lean-forward="false" selection-start-line="347" selection-start-column="12" selection-end-line="347" selection-end-column="12" />
+        <state relative-caret-position="126">
+          <caret line="7" column="18" lean-forward="false" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="36">
+            <caret line="2" column="126" lean-forward="false" selection-start-line="2" selection-start-column="126" selection-end-line="2" selection-end-column="126" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/datastore/ConnectionPoolManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="71" column="6" lean-forward="false" selection-start-line="71" selection-start-column="6" selection-end-line="71" selection-end-column="6" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/datastore/DatastoreException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="40" lean-forward="false" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/LobbyGames.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2">
+          <caret line="57" column="20" lean-forward="false" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/commands/ExampleCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="614">
+          <caret line="47" column="32" lean-forward="false" selection-start-line="47" selection-start-column="32" selection-end-line="47" selection-end-column="32" />
+          <folding>
+            <element signature="e#1153#1154#0" expanded="true" />
+            <element signature="e#1182#1183#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/datastore/Datastore.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="39" column="49" lean-forward="false" selection-start-line="39" selection-start-column="49" selection-end-line="39" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="34" column="40" lean-forward="true" selection-start-line="34" selection-start-column="40" selection-end-line="34" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/richardsprojects/plugins/lobbygames/datastore/MySQLDatastore.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -1,12 +1,11 @@
-package net.richardsprojects.plugins.inventorygames.datastore;
+package net.richardsprojects.plugins.lobbygames.datastore;
 
-import net.richardsprojects.plugins.inventorygames.InventoryGames;
-import net.richardsprojects.plugins.inventorygames.Utils;
+import net.richardsprojects.plugins.lobbygames.LobbyGames;
+import net.richardsprojects.plugins.lobbygames.Utils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
-import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.Collections;
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * This class is an implementation of the InventoryGames datastore system in
+ * This class is an implementation of the LobbyGames datastore system in
  * YML.
  *
  * @author RichardB122
@@ -53,7 +52,7 @@ public class YmlDatastore extends Datastore {
 		if (!loadTicTacToe()) return false;
 
 		saveTask = new SaveTask(this, true);
-		saveTask.runTaskTimerAsynchronously(InventoryGames.instance, 600, 600);
+		saveTask.runTaskTimerAsynchronously(LobbyGames.instance, 600, 600);
 
 		return loadUUIDs();
 	}
@@ -146,9 +145,9 @@ public class YmlDatastore extends Datastore {
 						this.wins.put(uuid, wins);
 						this.ties.put(uuid, ties);
 					} else {
-						String msg = "[InventoryGames] There was an error reading ";
+						String msg = "[LobbyGames] There was an error reading ";
 						msg = msg + key + " from tictactoe.yml.";
-						InventoryGames.instance.log.info(msg);
+						LobbyGames.instance.log.info(msg);
 					}
 				}
 			}
@@ -206,7 +205,7 @@ public class YmlDatastore extends Datastore {
 	 */
 	private boolean checkFiles() {
 		// create highscores file
-		String path = InventoryGames.dataFolder.toString() + File.separator + "highscores.yml";
+		String path = LobbyGames.dataFolder.toString() + File.separator + "highscores.yml";
 		highscoresFile = new File(path);
 		if (!highscoresFile.exists()) {
 			try {
@@ -217,7 +216,7 @@ public class YmlDatastore extends Datastore {
 		}
 
 		// create tictactoe file
-		path = InventoryGames.dataFolder.toString() + File.separator + "tictactoe.yml";
+		path = LobbyGames.dataFolder.toString() + File.separator + "tictactoe.yml";
 		ticTacToeFile = new File(path);
 		if (!ticTacToeFile.exists()) {
 			try {
@@ -228,7 +227,7 @@ public class YmlDatastore extends Datastore {
 		}
 
 		// create UUID's file
-		path = InventoryGames.dataFolder.toString() + File.separator + "uuids.yml";
+		path = LobbyGames.dataFolder.toString() + File.separator + "uuids.yml";
 		uuidsFile = new File(path);
 		if (!uuidsFile.exists()) {
 			try {
@@ -485,11 +484,23 @@ public class YmlDatastore extends Datastore {
 	 */
 	@Override
 	public void onDisable() {
-		String msg = "[InventoryGames] Saving data to disk...";
-		InventoryGames.instance.log.info(msg);
+		String msg = "Saving data to disk...";
+		LobbyGames.instance.log.info(msg);
 		saveTask.cancel();
 		saveTask = new SaveTask(this, false);
 		saveTask.run();
+	}
+
+	/**
+	 * This is a simple method that returns if there is information
+	 * regarding this name in the datastore.
+	 *
+	 * @return if there is information regarding this player in the datastore
+	 */
+	@Override
+	public boolean registeredName(String name) {
+		UUID uuid = getUUID(name);
+		return uuid != null;
 	}
 
 	/**
@@ -586,10 +597,20 @@ public class YmlDatastore extends Datastore {
 			YamlConfiguration ticTacToeYML = new YamlConfiguration();
 			ticTacToeYML.load(ticTacToeFile);
 
-			for (UUID uuid : wins.keySet()) {
-				int wins = this.wins.get(uuid);
-				int losses = this.losses.get(uuid);
-				int ties = this.ties.get(uuid);
+			for (UUID uuid : names.keySet()) {
+				int wins = 0;
+				int losses = 0;
+				int ties = 0;
+
+				if (this.wins.get(uuid) != null) {
+					wins = this.wins.get(uuid);
+				}
+				if (this.losses.get(uuid) != null) {
+					losses = this.losses.get(uuid);
+				}
+				if (this.ties.get(uuid) != null) {
+					ties = this.ties.get(uuid);
+				}
 
 				String str = wins + "-" + losses + "-" + ties;
 				ticTacToeYML.set(uuid.toString(), str);
@@ -597,6 +618,7 @@ public class YmlDatastore extends Datastore {
 
 			ticTacToeYML.save(ticTacToeFile);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 

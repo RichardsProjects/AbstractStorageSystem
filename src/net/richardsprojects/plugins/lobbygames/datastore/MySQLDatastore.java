@@ -1,7 +1,8 @@
-package net.richardsprojects.plugins.inventorygames.datastore;
+package net.richardsprojects.plugins.lobbygames.datastore;
 
-import net.richardsprojects.plugins.inventorygames.InventoryGames;
+import net.richardsprojects.plugins.lobbygames.LobbyGames;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +10,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 /**
- * This class is an implementation of the InventoryGames plugin datastore for
+ * This class is an implementation of the LobbyGames plugin datastore for
  * MySQL databases that uses HikariCP for connection management.
  *
  * @author RichardB122
@@ -18,7 +19,7 @@ import java.util.UUID;
 public class MySQLDatastore extends Datastore {
 
 	private final ConnectionPoolManager pool;
-	private final String PREFIX = InventoryGames.instance.dbPrefix;
+	private final String PREFIX = LobbyGames.instance.dbPrefix;
 
 	/**
 	 * Setups the connection to the MySQL database.
@@ -37,18 +38,12 @@ public class MySQLDatastore extends Datastore {
 	 * @return whether it succeeded or failed
 	 */
 	public boolean updateTicTacToeLosses(UUID player, String name, int losses) {
-		boolean recordExists = false;
 		boolean success = true;
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet set = null;
 
 		String sql = "INSERT INTO " + PREFIX + "tictactoe VALUES (?, ?, 0, ?, 0) ON DUPLICATE KEY" +
-				" UPDATE games_lost = ? AND player = ?";
-		try {
-			conn = pool.getConnection();
-			ps = conn.prepareStatement(sql);
-
+				" UPDATE games_lost = ?, player = ?";
+		try (Connection conn = pool.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, player.toString());
 			ps.setString(2, name);
 			ps.setInt(3, losses);
@@ -58,8 +53,6 @@ public class MySQLDatastore extends Datastore {
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			success = false;
-		} finally {
-			pool.close(conn, ps, set);
 		}
 
 		return success;
@@ -76,18 +69,12 @@ public class MySQLDatastore extends Datastore {
 	 */
 	@Override
 	public boolean updateTicTacToeTies(UUID player, String name, int ties) {
-		boolean recordExists = false;
 		boolean success = true;
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet set = null;
 
 		String sql = "INSERT INTO " + PREFIX + "tictactoe VALUES (?, ?, 0, 0, ?) ON DUPLICATE KEY" +
 				" UPDATE games_tied = ?, player = ?";
-		try {
-			conn = pool.getConnection();
-			ps = conn.prepareStatement(sql);
-
+		try (Connection conn = pool.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, player.toString());
 			ps.setString(2, name);
 			ps.setInt(3, ties);
@@ -97,8 +84,6 @@ public class MySQLDatastore extends Datastore {
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			success = false;
-		} finally {
-			pool.close(conn, ps, set);
 		}
 
 		return success;
@@ -123,15 +108,12 @@ public class MySQLDatastore extends Datastore {
 	 * @return player's highscore or 0 if no record was found.
 	 */
 	public int getHighscore(UUID player) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet set = null;
+		ResultSet set;
 		int highscore = 0;
 
 		String sql = "SELECT highscore FROM " + PREFIX + "highscores WHERE uuid = ?";
-		try {
-			conn = pool.getConnection();
-			ps = conn.prepareStatement(sql);
+		try (Connection conn = pool.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, player.toString());
 			set = ps.executeQuery();
 
@@ -140,9 +122,8 @@ public class MySQLDatastore extends Datastore {
 				highscore = set.getInt("highscore");
 			}
 
-		} catch (SQLException e) {} finally {
-			pool.close(conn, ps, set);
-		}
+			set.close();
+		} catch (SQLException e) {}
 
 		return highscore;
 	}
@@ -156,31 +137,30 @@ public class MySQLDatastore extends Datastore {
 	 * @return leaderboard String
 	 */
 	public String getLeaderboard() {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet set = null;
+		ResultSet set;
+		StringBuilder builder = new StringBuilder();
+		String leaderboard;
 
-		String leaderboard = "";
 		String sql = "SELECT uuid, player, highscore FROM " + PREFIX
 				+ "highscores ORDER BY highscore DESC LIMIT 10";
 
-		try {
-			conn = pool.getConnection();
-			ps = conn.prepareStatement(sql);
+		try (Connection conn = pool.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
 			set = ps.executeQuery();
 
-			if (set != null) {
-				while (set.next()) {
-					int score = set.getInt("highscore");
-					String pName = set.getString("player");
-					leaderboard = leaderboard + ">" + pName + "," + score;
-				}
+			while (set.next()) {
+				int score = set.getInt("highscore");
+				String pName = set.getString("player");
+				builder.append(">");
+				builder.append(pName);
+				builder.append(",");
+				builder.append(score);
 			}
 
-		} catch (SQLException e) {} finally {
-			pool.close(conn, ps, set);
-		}
+			set.close();
+		} catch (SQLException e) {}
 
+		leaderboard = builder.toString();
 		if (leaderboard.length() > 0) leaderboard = leaderboard.substring(1);
 		return leaderboard;
 	}
@@ -193,15 +173,12 @@ public class MySQLDatastore extends Datastore {
 	 * @return player's wins or 0 if no record was found.
 	 */
 	public int getTicTacToeWins(UUID player) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet set = null;
+		ResultSet set;
 		int gamesWon = 0;
 
 		String sql = "SELECT games_won FROM " + PREFIX + "tictactoe WHERE uuid = ?";
-		try {
-			conn = pool.getConnection();
-			ps = conn.prepareStatement(sql);
+		try (Connection conn = pool.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, player.toString());
 			set = ps.executeQuery();
 
@@ -210,9 +187,8 @@ public class MySQLDatastore extends Datastore {
 				gamesWon = set.getInt("games_won");
 			}
 
-		} catch (SQLException e) {} finally {
-			pool.close(conn, ps, set);
-		}
+			set.close();
+		} catch (SQLException e) {}
 
 		return gamesWon;
 	}
@@ -226,15 +202,13 @@ public class MySQLDatastore extends Datastore {
 	 */
 	@Override
 	public int getTicTacToeTies(UUID player) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet set = null;
+		ResultSet set;
 		int gamesTied = 0;
 
 		String sql = "SELECT games_tied FROM " + PREFIX + "tictactoe WHERE uuid = ?";
-		try {
-			conn = pool.getConnection();
-			ps = conn.prepareStatement(sql);
+		try (Connection conn = pool.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
+
 			ps.setString(1, player.toString());
 			set = ps.executeQuery();
 
@@ -243,9 +217,8 @@ public class MySQLDatastore extends Datastore {
 				gamesTied = set.getInt("games_tied");
 			}
 
-		} catch (SQLException e) {} finally {
-			pool.close(conn, ps, set);
-		}
+			set.close();
+		} catch (SQLException e) {}
 
 		return gamesTied;
 	}
@@ -259,15 +232,12 @@ public class MySQLDatastore extends Datastore {
 	 */
 	@Override
 	public int getTicTacToeTies(String player) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet set = null;
+		ResultSet set;
 		int gamesTied = 0;
 
 		String sql = "SELECT games_tied FROM " + PREFIX + "tictactoe WHERE player = ?";
-		try {
-			conn = pool.getConnection();
-			ps = conn.prepareStatement(sql);
+		try (Connection conn = pool.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, player);
 			set = ps.executeQuery();
 
@@ -276,9 +246,8 @@ public class MySQLDatastore extends Datastore {
 				gamesTied = set.getInt("games_tied");
 			}
 
-		} catch (SQLException e) {} finally {
-			pool.close(conn, ps, set);
-		}
+			set.close();
+		} catch (SQLException e) {}
 
 		return gamesTied;
 	}
@@ -291,15 +260,12 @@ public class MySQLDatastore extends Datastore {
 	 * @return loss count or 0 if no information available
 	 */
 	public int getTicTacToeLosses(UUID player) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet set = null;
+		ResultSet set;
 		int gamesLost = 0;
 
 		String sql = "SELECT games_lost FROM " + PREFIX + "tictactoe WHERE uuid = ?";
-		try {
-			conn = pool.getConnection();
-			ps = conn.prepareStatement(sql);
+		try (Connection conn = pool.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, player.toString());
 			set = ps.executeQuery();
 
@@ -308,9 +274,8 @@ public class MySQLDatastore extends Datastore {
 				gamesLost = set.getInt("games_lost");
 			}
 
-		} catch (SQLException e) {} finally {
-			pool.close(conn, ps, set);
-		}
+			set.close();
+		} catch (SQLException e) {}
 
 		return gamesLost;
 	}
@@ -326,17 +291,12 @@ public class MySQLDatastore extends Datastore {
 	 */
 	public boolean updateHighscore(UUID player, String name, int score) {
 		boolean success = true;
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet set = null;
 
 		String sql = "INSERT INTO " + PREFIX + "highscores VALUES (?, ?, ?) ON DUPLICATE KEY" +
 				" UPDATE highscore = ?, player = ?";
 
-		try {
-			conn = pool.getConnection();
-			ps = conn.prepareStatement(sql);
-
+		try (Connection conn = pool.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, player.toString());
 			ps.setString(2, name);
 			ps.setInt(3, score);
@@ -346,8 +306,6 @@ public class MySQLDatastore extends Datastore {
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			success = false;
-		} finally {
-			pool.close(conn, ps, set);
 		}
 
 		return success;
@@ -361,15 +319,12 @@ public class MySQLDatastore extends Datastore {
 	 * @return player's highscore or 0 if no record was found.
 	 */
 	public int getHighscore(String player) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet set = null;
+		ResultSet set;
 		int highscore = 0;
 
 		String sql = "SELECT highscore FROM " + PREFIX + "highscores WHERE player = ?";
-		try {
-			conn = pool.getConnection();
-			ps = conn.prepareStatement(sql);
+		try (Connection conn = pool.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, player);
 			set = ps.executeQuery();
 
@@ -378,9 +333,8 @@ public class MySQLDatastore extends Datastore {
 				highscore = set.getInt("highscore");
 			}
 
-		} catch (SQLException e) {} finally {
-			pool.close(conn, ps, set);
-		}
+			set.close();
+		} catch (SQLException e) {}
 
 		return highscore;
 	}
@@ -396,17 +350,12 @@ public class MySQLDatastore extends Datastore {
 	 */
 	public boolean updateTicTacToeWins(UUID player, String name, int wins) {
 		boolean success = true;
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet set = null;
 
 		String sql = "INSERT INTO " + PREFIX + "tictactoe VALUES (?, ?, ?, 0, 0) ON DUPLICATE KEY" +
 				" UPDATE games_won = ?, player = ?";
 
-		try {
-			conn = pool.getConnection();
-			ps = conn.prepareStatement(sql);
-
+		try (Connection conn = pool.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, player.toString());
 			ps.setString(2, name);
 			ps.setInt(3, wins);
@@ -416,8 +365,6 @@ public class MySQLDatastore extends Datastore {
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			success = false;
-		} finally {
-			pool.close(conn, ps, set);
 		}
 
 		return success;
@@ -431,15 +378,12 @@ public class MySQLDatastore extends Datastore {
 	 * @return player's wins or 0 if no record was found.
 	 */
 	public int getTicTacToeWins(String player) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet set = null;
 		int gamesWon = 0;
+		ResultSet set;
 
 		String sql = "SELECT games_won FROM " + PREFIX + "tictactoe WHERE player = ?";
-		try {
-			conn = pool.getConnection();
-			ps = conn.prepareStatement(sql);
+		try (Connection conn = pool.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, player);
 			set = ps.executeQuery();
 
@@ -448,9 +392,8 @@ public class MySQLDatastore extends Datastore {
 				gamesWon = set.getInt("games_won");
 			}
 
-		} catch (SQLException e) {} finally {
-			pool.close(conn, ps, set);
-		}
+			set.close();
+		} catch (SQLException e) {}
 
 		return gamesWon;
 	}
@@ -466,16 +409,11 @@ public class MySQLDatastore extends Datastore {
 	 */
 	public boolean updateTickTackToeLosses(UUID player, String name, int losses) {
 		boolean success = true;
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet set = null;
 
 		String sql = "INSERT INTO " + PREFIX + "tictactoe VALUES (?, ?, 0, ?, 0) ON" +
 				" DUPLICATE KEY UPDATE games_lost = ?, name = ?";
-		try {
-			conn = pool.getConnection();
-			ps = conn.prepareStatement(sql);
-
+		try (Connection conn = pool.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, player.toString());
 			ps.setString(2, name);
 			ps.setInt(3, losses);
@@ -485,8 +423,6 @@ public class MySQLDatastore extends Datastore {
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			success = false;
-		} finally {
-			pool.close(conn, ps, set);
 		}
 
 		return success;
@@ -500,15 +436,13 @@ public class MySQLDatastore extends Datastore {
 	 * @return loss count or 0 if no information available
 	 */
 	public int getTicTacToeLosses(String player) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet set = null;
+		ResultSet set;
 		int gamesLost = 0;
 
 		String sql = "SELECT games_lost FROM " + PREFIX + "tictactoe WHERE Player = ?";
-		try {
-			conn = pool.getConnection();
-			ps = conn.prepareStatement(sql);
+		try (Connection conn = pool.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
+
 			ps.setString(1, player);
 			set = ps.executeQuery();
 
@@ -516,9 +450,8 @@ public class MySQLDatastore extends Datastore {
 				gamesLost = set.getInt("games_lost");
 			}
 
-		} catch (SQLException e) {} finally {
-			pool.close(conn, ps, set);
-		}
+			set.close();
+		} catch (SQLException e) {}
 
 		return gamesLost;
 	}
@@ -530,6 +463,35 @@ public class MySQLDatastore extends Datastore {
 	@Override
 	public void onDisable() {
 		pool.closePool();
+	}
+
+	/**
+	 * This is a simple method that returns if there is information
+	 * regarding this name in the datastore.
+	 *
+	 * @param name the player's name to check
+	 * @return if there is information regarding this player in the datastore
+	 */
+	@Override
+	public boolean registeredName(String name) {
+		ResultSet set;
+		boolean registeredName = false;
+
+		String sql = "SELECT games_won FROM " + PREFIX + "tictactoe WHERE player = ?";
+		try (Connection conn = pool.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setString(1, name);
+			set = ps.executeQuery();
+
+			// load data from set
+			while (set.next()) {
+				registeredName = true;
+			}
+
+			set.close();
+		} catch (SQLException e) {}
+
+		return registeredName;
 	}
 
 	/**
@@ -556,16 +518,11 @@ public class MySQLDatastore extends Datastore {
 				+ "), player VARCHAR(50), games_won INT, games_lost INT, games_tied INT" +
 				", PRIMARY KEY(uuid))";
 
-		Connection conn = null;
-		PreparedStatement ps = null;
-		try {
-			conn = pool.getConnection();
-			ps = conn.prepareStatement(sql);
+		try (Connection conn = pool.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			result = false;
-		} finally {
-			pool.close(conn, ps, null);
 		}
 
 		return result;
@@ -585,16 +542,11 @@ public class MySQLDatastore extends Datastore {
 				" (uuid VARCHAR(50), player VARCHAR(50), highscore INT, " +
 				"PRIMARY KEY (uuid))";
 
-		Connection conn = null;
-		PreparedStatement ps = null;
-		try {
-			conn = pool.getConnection();
-			ps = conn.prepareStatement(sql);
+		try (Connection conn = pool.getConnection();
+			 PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			result = false;
-		} finally {
-			pool.close(conn, ps, null);
 		}
 
 		return result;

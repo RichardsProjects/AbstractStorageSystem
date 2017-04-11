@@ -1,4 +1,4 @@
-package net.richardsprojects.plugins.inventorygames.datastore;
+package net.richardsprojects.plugins.lobbygames.datastore;
 
 import java.sql.SQLException;
 
@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-import net.richardsprojects.plugins.inventorygames.InventoryGames;
+import net.richardsprojects.plugins.lobbygames.LobbyGames;
 
 /**
  * A wrapper class for HikariCP. Used to manage the connection pool. Based on a
@@ -20,13 +20,7 @@ import net.richardsprojects.plugins.inventorygames.InventoryGames;
  * @version 3/22/17
  */
 public class ConnectionPoolManager {
-	
-    private String hostname;
-    private String port;
-    private String database;
-    private String username;
-    private String password;
-	
+
     private HikariDataSource dataSource;
     
     private int minimumConnections;
@@ -45,12 +39,6 @@ public class ConnectionPoolManager {
      * plugin's config file.
      */
     private void init() {
-        hostname = InventoryGames.instance.mysql_dbHost;
-        port = InventoryGames.instance.mysql_port;        
-        database = InventoryGames.instance.mysql_dbName;
-        username = InventoryGames.instance.mysql_dbUsername;
-        password = InventoryGames.instance.mysql_dbPassword;
-        
         minimumConnections = 0;
         maximumConnections = 5;
         connectionTimeout = 29999;
@@ -64,15 +52,15 @@ public class ConnectionPoolManager {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(
                 "jdbc:mysql://" +
-                        hostname +
+                        LobbyGames.instance.mysql_dbHost +
                         ":" +
-                        port +
+                        LobbyGames.instance.mysql_port +
                         "/" +
-                        database
+                        LobbyGames.instance.mysql_dbName
         );
         config.setDriverClassName("com.mysql.jdbc.Driver");
-        config.setUsername(username);
-        config.setPassword(password);
+        config.setUsername(LobbyGames.instance.mysql_dbUsername);
+        config.setPassword(LobbyGames.instance.mysql_dbPassword);
         config.setMinimumIdle(minimumConnections);
         config.setMaximumPoolSize(maximumConnections);
         config.setConnectionTimeout(connectionTimeout);

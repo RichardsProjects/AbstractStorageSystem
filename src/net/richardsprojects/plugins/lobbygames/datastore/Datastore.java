@@ -1,9 +1,9 @@
-package net.richardsprojects.plugins.inventorygames.datastore;
+package net.richardsprojects.plugins.lobbygames.datastore;
 
 import java.util.UUID;
 
 /**
- * A simple abstract class that contains all the methods that an InventoryGames
+ * A simple abstract class that contains all the methods that an LobbyGames
  * plugin datastore needs to contain.
  *
  * @author RichardB122
@@ -157,5 +157,13 @@ public abstract class Datastore {
 	 * onDisable method of the plugin.
 	 */
 	public abstract void onDisable();
+
+	/**
+	 * This is a simple method that returns if there is information
+	 * regarding this name in the datastore.
+	 *
+	 * @return if there is information regarding this player in the datastore
+	 */
+	public abstract boolean registeredName(String name);
 	
 }
